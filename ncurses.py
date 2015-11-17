@@ -31,16 +31,16 @@ p = Player("toto")
 init_curses()
 g = GUI(p)
 path = [
-    (2, 6, {id: "room-1", dir: "right"}),
+    (2, 26, {id: "room-1", dir: "right"}),
 ]
-start = Room(5, 7, 1, 1, path)
+start = Room(25, 27, 1, 1, path)
 start.characters.append(p)
 p.room = start
 Room.rooms.append(start)
 path = [
     (0, 3, {id: "room-1", dir: "up"}),
 ]
-Room.rooms.append(Room(8, 8, 10, 10, path))
+Room.rooms.append(Room(8, 8, 30, 30, path))
 path = [
     (0, 0, {id: "room-0", dir: "left"}),
     (0, 1, None),
@@ -55,7 +55,7 @@ path = [
     (5, 5, {id: "room-2", dir: "down"}),
     #(6, 5, "room-2"),
 ]
-Room.rooms.append(Room(7, 6, 3, 8, path, False))
+Room.rooms.append(Room(7, 6, 23, 28, path, False))
 def get_key_map(key):
     if key == curses.KEY_DOWN:
         return "down"
@@ -71,6 +71,8 @@ while True:
     c = g.win.getch()
     if c == 27 or c == ord('q'):
         break
+    if c == ord('n'):
+        fill(start, 1)
     if p.move(get_key_map(c)):
         dungeonTurn(p, p.room)
     for r in Room.rooms:

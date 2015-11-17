@@ -3,7 +3,7 @@ from Level import *
 class Enemy(Personnage) :
     def __init__(self, level, x, y, nom="Enemy",):
         l = Level(level)
-        Personnage.__init__(self, nom, l.maxHp, l, level*30, 0, 0, level*7, x, y)
+        Personnage.__init__(self, nom, l.maxHp - 50, l, level*30, 0, 0, level*7, x, y)
 
     def movesToPlayer(self, player, r):
         flag = False

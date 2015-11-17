@@ -21,7 +21,7 @@ class Personnage (object):
         self.hp -= power
 
     def isDead(self):
-        return self.hp < 0
+        return self.hp <= 0
 
     def hits(self, perso):
         if perso.lvl.defense + perso.armour - self.strength - self.lvl.attack < 0 :

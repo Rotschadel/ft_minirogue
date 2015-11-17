@@ -71,15 +71,15 @@ while True:
     c = g.win.getch()
     if c == 27 or c == ord('q'):
         break
-    p.move(get_key_map(c))
+    if p.move(get_key_map(c)):
+        dungeonTurn(p, p.room)
     for r in Room.rooms:
         r.display()
-    #while True :
-        #if p.action(chr(c), activeRoom):
-        #    break
-    #searchItem(p, activeRoom)
-    #dungeonTurn(p, activeRoom)
-    #if p.isDead() :
-    #    touche = 'q'
+    if p.isDead() :
+       break
     g.display(get_key_map(c))
 clear_curses()
+if (p.isDead()):
+    print("You were killed !")
+else:
+    print("Game over")

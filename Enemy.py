@@ -18,3 +18,8 @@ class Enemy(Personnage) :
         if not flag :
             if player.ord < self.ord :
                 flag = self.action('d', r)
+
+    def checkDead(self):
+        if self.hp <= 0:
+            return True
+        return False

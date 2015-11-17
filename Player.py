@@ -52,6 +52,12 @@ class Player (Personnage) :
             x -= 1
         elif key == "right":
             x += 1
+        for c in self.room.characters :
+            if c.abs == x and c.ord == y :
+                self.hits(c)
+                if c.checkDead():
+                    self.room.characters.remove(c)
+                return True
         if x <= 0 or x >= self.room.height - 1:
             return False
         if y <= 0 or y >= self.room.width - 1:

@@ -1,6 +1,7 @@
 from Level import *
 import curses
-from ncurses import *
+from Room import *
+
 class Personnage (object):
 
     def __init__(self, nom, health, level, exp, attack, defense, wealth, x, y, player=False):
@@ -14,6 +15,7 @@ class Personnage (object):
         self.abs = x
         self.ord = y
         self.isPlayer = player
+        self.room = None
 
     def isHit(self, power):
         self.hp -= power

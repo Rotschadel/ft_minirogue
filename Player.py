@@ -1,7 +1,7 @@
 from Personnage import *
 from Item import *
 from Level import *
-from ncurses import *
+from Room import *
 class Player (Personnage) :
 
     def __init__(self, nom):
@@ -37,3 +37,10 @@ class Player (Personnage) :
         for r in t :
             if self.abs > r.pos_x and self.abs < r.pos_x+r.width and self.ord > r.pos_y and self.ord < r.pos_y+r.height :
                 return r
+    """
+    def move(self, key):
+        x = self.abs
+        y = self.abs
+        if key == 258:
+            x
+    """

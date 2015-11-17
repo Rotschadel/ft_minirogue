@@ -3,7 +3,10 @@ from Player import Player
 
 
 class Room(object):
+    nb_rooms = 0
     def __init__(self, w, h, y, x, path, is_room=True):
+        self.id = "room-" + str(Room.nb_rooms)
+        Room.nb_rooms += 1
         self.height = h
         self.width = w
         self.pos_x = x
@@ -17,9 +20,8 @@ class Room(object):
         if self.is_room:
             self.win.box()
             self.win.bkgd('.')
-        else:
-            for p in room.path:
-                self.win.addstr(p[0], p[1], "p")
+        for p in self.path:
+            self.win.addstr(p[0], p[1], '+')
         for c in self.characters:
             self.win.addstr(c.ord, c.abs, c.name[0])
         self.win.refresh()
@@ -57,8 +59,29 @@ rooms = []
 cors = []
 p = Player("toto")
 g = GUI(p)
-rooms.append(Room(5, 7, 1, 1, []))
-rooms.append(Room(8, 8, 10, 10, []))
+path = [
+    (2, 6, {id: "room-1", dir: "right"}),
+]
+rooms.append(Room(5, 7, 1, 1, path))
+path = [
+    (0, 3, {id: "room-1", dir: "up"}),
+]
+rooms.append(Room(8, 8, 10, 10, path))
+path = [
+    (0, 0, {id: "room-0", dir: "left"}),
+    (0, 1, None),
+    (0, 2, None),
+    (0, 3, None),
+    (0, 4, None),
+    (0, 5, None),
+    (1, 5, None),
+    (2, 5, None),
+    (3, 5, None),
+    (4, 5, None),
+    (5, 5, {id: "room-2", dir: "down"}),
+    #(6, 5, "room-2"),
+]
+rooms.append(Room(7, 6, 3, 8, path, False))
 """
 path = [
     (20, 20),

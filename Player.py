@@ -2,6 +2,7 @@ from Personnage import *
 from Item import *
 from Level import *
 from Room import *
+
 class Player (Personnage) :
 
     def __init__(self, nom):
@@ -37,10 +38,24 @@ class Player (Personnage) :
         for r in t :
             if self.abs > r.pos_x and self.abs < r.pos_x+r.width and self.ord > r.pos_y and self.ord < r.pos_y+r.height :
                 return r
-    """
+
     def move(self, key):
+        if key == None:
+            return False
         x = self.abs
-        y = self.abs
-        if key == 258:
-            x
-    """
+        y = self.ord
+        if key == "down":
+            y += 1
+        elif key == "up":
+            y -= 1
+        elif key == "left":
+            x -= 1
+        elif key == "right":
+            x += 1
+        if x <= 0 or x >= self.room.height - 1:
+            return False
+        if y <= 0 or y >= self.room.width - 1:
+            return False
+        self.abs = x
+        self.ord = y
+        return True

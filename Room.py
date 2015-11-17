@@ -2,6 +2,7 @@ import curses
 
 class Room(object):
     nb_rooms = 0
+    rooms = []
     def __init__(self, w, h, y, x, path, is_room=True):
         self.id = "room-" + str(Room.nb_rooms)
         Room.nb_rooms += 1
@@ -12,6 +13,7 @@ class Room(object):
         self.path = path
         self.win = curses.newwin(w, h, y, x)
         self.is_room = is_room
+        self.item = []
         self.characters = []
     def display(self):
         self.win.clear()
@@ -29,7 +31,7 @@ class GUI(object):
         self.player = player
         self.win = curses.newwin(5, 100, 40, 0)
         self.win.keypad(1)
-    def display(self):
+    def display(self, debug=None):
         hits = "Hits:" + str(self.player.hp)
         hits += "(" + str(self.player.lvl.maxHp) + ")"
         strength = "Str:" + str(self.player.strength)
@@ -42,4 +44,6 @@ class GUI(object):
         self.win.addstr(2, 42, strength)
         self.win.addstr(2, 62, "Gold:" + str(self.player.gold))
         self.win.addstr(2, 82, "Armor:" + str(self.player.armour))
+        if debug is not None:
+            self.win.addstr(3, 3, debug)
         self.win.refresh()

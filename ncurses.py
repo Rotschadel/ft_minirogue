@@ -10,21 +10,22 @@ def clear_curses():
     curses.endwin()
 
 
-init_curses()
-rooms = []
-cors = []
+#name = raw_input("Enter your name: ")
 p = Player("toto")
+
+init_curses()
 g = GUI(p)
 path = [
     (2, 6, {id: "room-1", dir: "right"}),
 ]
 start = Room(5, 7, 1, 1, path)
 start.characters.append(p)
-rooms.append(start)
+p.room = start
+Room.rooms.append(start)
 path = [
     (0, 3, {id: "room-1", dir: "up"}),
 ]
-rooms.append(Room(8, 8, 10, 10, path))
+Room.rooms.append(Room(8, 8, 10, 10, path))
 path = [
     (0, 0, {id: "room-0", dir: "left"}),
     (0, 1, None),
@@ -39,13 +40,24 @@ path = [
     (5, 5, {id: "room-2", dir: "down"}),
     #(6, 5, "room-2"),
 ]
-rooms.append(Room(7, 6, 3, 8, path, False))
+Room.rooms.append(Room(7, 6, 3, 8, path, False))
+def get_key_map(key):
+    if key == curses.KEY_DOWN:
+        return "down"
+    elif key == curses.KEY_UP:
+        return "up"
+    elif key == curses.KEY_LEFT:
+        return "left"
+    elif curses.KEY_RIGHT:
+        return "right"
+    return None
 
 while True:
     c = g.win.getch()
     if c == 27 or c == ord('q'):
         break
-    for r in rooms:
+    p.move(get_key_map(c))
+    for r in Room.rooms:
         r.display()
-    g.display()
+    g.display(get_key_map(c))
 clear_curses()

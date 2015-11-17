@@ -1,7 +1,8 @@
 import curses
 from Player import *
 from Room import *
-
+from random import *
+from Enemy import *
 def init_curses():
     stdscr = curses.initscr()
     curses.curs_set(False)
@@ -9,6 +10,20 @@ def init_curses():
 def clear_curses():
     curses.endwin()
 
+def dungeonTurn(player, r):
+    for c in r.characters :
+        if not c.isPlayer :
+            c.movesToPlayer(player, r)
+
+def searchItem(player, r):
+    for i in r.items :
+        if i.abs == player.abs and i.ord == player.ord :
+            player.grabsItem(i)
+
+def fill(r,n):
+    r.characters.append(Enemy(n, r.width/2, r.height/2))
+    k = randint(0,3)
+    r.item.append(Item(["meat","treasure","weapon","armour"][k], n, r.width, r.height))
 
 #name = raw_input("Enter your name: ")
 p = Player("toto")
@@ -51,7 +66,7 @@ def get_key_map(key):
     elif curses.KEY_RIGHT:
         return "right"
     return None
-
+fill(start, 1)
 while True:
     c = g.win.getch()
     if c == 27 or c == ord('q'):
@@ -59,5 +74,12 @@ while True:
     p.move(get_key_map(c))
     for r in Room.rooms:
         r.display()
+    #while True :
+        #if p.action(chr(c), activeRoom):
+        #    break
+    #searchItem(p, activeRoom)
+    #dungeonTurn(p, activeRoom)
+    #if p.isDead() :
+    #    touche = 'q'
     g.display(get_key_map(c))
 clear_curses()

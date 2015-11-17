@@ -31,7 +31,7 @@ class Personnage (object):
     def moves(self, dir, r):
         x = {'l': -1, 'r': 1, 'u': 0, 'd': 0}[dir]
         y = {'d': -1, 'u': 1, 'l': 0, 'r': 0}[dir]
-        if self.abs + x > r.pos_x and self.abs + x < r.pos_x+r.width and self.ord + y > r.pos_y and self.ord + y < r.pos_y+r.height :
+        if self.abs + x > 0 and self.abs + x < r.width and self.ord + y > 0 and self.ord + y < r.height :
             self.abs += x
             self.ord += y
             return True

@@ -1,3 +1,4 @@
+from Level import *
 class Item(object) :
     def __init__(self, category, level, x, y):
         self.type = category

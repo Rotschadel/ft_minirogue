@@ -1,6 +1,9 @@
+from Level import *
+import curses
+from ncurses import *
 class Personnage (object):
 
-    def __init__(self, nom, health, level, exp, attack, defense, wealth, x, y):
+    def __init__(self, nom, health, level, exp, attack, defense, wealth, x, y, player=False):
         self.name = nom
         self.hp = health
         self.lvl = level
@@ -10,6 +13,7 @@ class Personnage (object):
         self.gold = wealth
         self.abs = x
         self.ord = y
+        self.isPlayer = player
 
     def isHit(self, power):
         self.hp -= power
@@ -22,13 +26,21 @@ class Personnage (object):
             perso.hp -= self.strength + self.lvl.attack - perso.lvl.defense - perso.armour
 
 
-    def moves(self, dir):
+    def moves(self, dir, r):
         x = {'l': -1, 'r': 1, 'u': 0, 'd': 0}[dir]
         y = {'d': -1, 'u': 1, 'l': 0, 'r': 0}[dir]
-        self.abs, self.ord += x, y
+        if self.abs + x > r.pos_x and self.abs + x < r.pos_x+r.width and self.ord + y > r.pos_y and self.ord + y < r.pos_y+r.height :
+            self.abs += x
+            self.ord += y
+            return True
+        else :
+            return False
 
-    def action(self, act):
-        if act=='s' :
-            #hits
-        elif act in ['u','d','l','r'] :
-            self.moves(act)
+    def action(self, act, r):
+        x = {'l': -1, 'r': 1, 'u': 0, 'd': 0}[act]
+        y = {'d': -1, 'u': 1, 'l': 0, 'r': 0}[act]
+        for c in r.characters :
+            if c.abs == self.abs + x and c.ord == self.ord + y :
+                self.hits(c)
+                return True
+        self.moves(act,r)

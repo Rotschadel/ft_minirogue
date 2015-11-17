@@ -1,8 +1,12 @@
+from Personnage import *
+from Item import *
+from Level import *
+from ncurses import *
 class Player (Personnage) :
 
     def __init__(self, nom):
         l = Level(1)
-        Personnage.__init__(self, nom, l.maxHp, l, 0, 0, 0, 0, 0, 0 )
+        Personnage.__init__(self, nom, l.maxHp, l, 0, 0, 0, 0, 1, 1, True )
 
     def collectsWeapon(self, ammount):
         self.strength = ammount
@@ -28,3 +32,8 @@ class Player (Personnage) :
 
     def canLevelUp(self):
         return self.xp > self.lvl.xpToNext
+
+    def isInRoom(self, t):
+        for r in t :
+            if self.abs > r.pos_x and self.abs < r.pos_x+r.width and self.ord > r.pos_y and self.ord < r.pos_y+r.height :
+                return r

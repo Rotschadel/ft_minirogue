@@ -6,7 +6,7 @@ class Personnage (object):
         self.lvl = level
         self.xp = exp
         self.strength = attack
-        self.armor = defense
+        self.armour = defense
         self.gold = wealth
         self.abs = x
         self.ord = y
@@ -18,7 +18,9 @@ class Personnage (object):
         return self.hp < 0
 
     def hits(self, perso):
-        perso.hp -= self.strength + self.lvl.attack
+        if perso.lvl.defense + perso.armour - self.strength - self.lvl.attack < 0 :
+            perso.hp -= self.strength + self.lvl.attack - perso.lvl.defense - perso.armour
+
 
     def moves(self, dir):
         x = {'l': -1, 'r': 1, 'u': 0, 'd': 0}[dir]
@@ -30,14 +32,3 @@ class Personnage (object):
             #hits
         elif act in ['u','d','l','r'] :
             self.moves(act)
-
-    
-
-
-print ("Debug")
-p = Personnage(100, 1, 0, 2, 3, 0)
-p.isHit(20)
-print(p.hp)
-p2 = Personnage(100, 1, 0, 2, 3, 0)
-p.hits(p2)
-print(p2.hp)
